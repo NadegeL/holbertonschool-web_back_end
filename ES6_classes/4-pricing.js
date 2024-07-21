@@ -1,20 +1,20 @@
 import Currency from './3-currency';
 
 export default class Pricing {
-  constructor(amont, currency) {
-    this._amont = amont;
+  constructor(amount, currency) {
+    this._amount = amount;
     this._currency = currency;
   }
 
-  get amont() {
-    return this._amont;
+  get amount() {
+    return this._amount;
   }
 
-  set amont(newPrice) {
+  set amount(newPrice) {
     if (typeof newPrice !== 'number') {
       throw new TypeError('Price must be a number');
     }
-    this._amont = newPrice;
+    this._amount = newPrice;
   }
 
   get currency() {
@@ -29,7 +29,7 @@ export default class Pricing {
   }
 
   displayFullPrice() {
-    return `${this._amont}  ${this._currency.displayFullCurrency()}`;
+    return `${this._amount}  ${this._currency.displayFullCurrency()}`;
   }
 
   static convertPrice(amount, conversionRate) {
