@@ -1,18 +1,19 @@
-export default function getListStudents(array) {
-  if (!Array.isArray(array)) {
-    throw new Error('Cannot process');
-  }
-
-  const result = [];
-
-  for (let i = 0; i < array.length; i++) {
-    const student = {
-      id: array[i].id,
-      firstName: array[i].firstName,
-      location: array[i].location,
-    };
-    result.push(student);
-  }
-
-  return result;
+export default function getListStudents() {
+  return [
+    {
+      id: 1,
+      firstName: 'Guillaume',
+      location: 'San Francisco',
+    },
+    {
+      id: 2,
+      firstName: 'James',
+      location: 'Columbia',
+    },
+    {
+      id: 5,
+      firstName: 'Serena',
+      location: 'San Francisco',
+    },
+  ];
 }
