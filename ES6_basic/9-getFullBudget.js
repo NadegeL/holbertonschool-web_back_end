@@ -1,4 +1,5 @@
-/* Rewrite getFullBudgetObject to use ES6 method properties in the fullBudget object */
+/* Rewrite getFullBudgetObject to use ES6 method
+ properties in the fullBudget object */
 
 import getBudgetObject from './7-getBudgetObject.js';
 

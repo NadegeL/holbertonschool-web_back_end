@@ -7,5 +7,6 @@ export default function createReportObject(employeesList) {
   };
 }
 
-/* method ES6 without "function" word, (...employeesList)=> use alldepartments and list of employees
+/* method ES6 without "function" word,
+(...employeesList)=> use alldepartments and list of employees
 'Object.keys' count the number of departments in employeesList */
