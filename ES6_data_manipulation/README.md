@@ -1,0 +1,7 @@
+Les tableaux sont des objets semblables à des listes dont le prototype possède des méthodes qui permettent de parcourir et de modifier le tableau. Ni la longueur ni le type des éléments d'un tableau JavaScript sont fixés. Comme la longueur d'un tableau peut varier à tout moment et que les données peuvent être stockées à des emplacements qui ne sont pas nécessairement contigus, les tableaux JavaScript ne sont pas forcément « pleins » / denses. Généralement, ces particularités sont appréciables mais si elles ne correspondent pas à votre usage, vous pourriez vouloir utiliser les tableaux typés.
+
+Les tableaux ne peuvent pas utiliser de chaînes de caractères comme indices pour les éléments (à la façon des tableaux associatifs) mais doivent utiliser des entiers. Définir une valeur ou tenter d'y accéder avec un indice non-entier via la notation entre crochet (ou la notation avec le point) ne définira ou ne récupèrera pas la valeur mais définira ou récupèrera une variable associée aux propriétés de l'objet formé par le tableau. Les propriétés et les éléments d'un tableau sont distincts et les opérations de parcours et de modification du tableau ne peuvent pas être appliquées à ces propriétés.
+
+
+Les tableaux sont indexés à partir de zéro: le premier élément d'un tableau a pour indice 0, et la position du dernier élément est donnée par length moins 1. Si on utilise un indice en dehors de cet intervalle, le résultat sera undefined (sous réserve qu'aucune propriété n'ait été ajoutée au préalable avec cet indice).
+
