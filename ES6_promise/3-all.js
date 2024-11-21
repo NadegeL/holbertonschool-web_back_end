@@ -10,4 +10,4 @@ export default function handleProfileSignup() {
     });
 }
 
-/* Promise.all() attend que ces deux promesses soient résolues.*/
+/* Promise.all() attend que ces deux promesses soient résolues. */
