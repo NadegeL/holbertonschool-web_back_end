@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+This script defines an asynchronous coroutine
+that waits for a random delay.
+"""
+
 import asyncio
 import random
 
