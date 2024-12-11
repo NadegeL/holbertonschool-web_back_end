@@ -1,2 +1,2 @@
 // script that list all documents with argument
-db.school.find({name="Holberton school"})
+db.school.find({name: "Holberton school"})
