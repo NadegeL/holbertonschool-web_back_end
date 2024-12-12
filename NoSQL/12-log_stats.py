@@ -10,17 +10,14 @@ def get_nginx_stats():
     db = client.logs
     collection = db.nginx
 
-    # Nombre total de documents
     total_logs = collection.count_documents({})
     print(f"{total_logs} logs")
 
-    # Comptage des méthodes HTTP
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     method_counts = {method: collection.count_documents(
         {"method": method}) for method in methods}
     print("Methods:")
 
-    # Comptage spécifique : GET + /status
     specific_count = collection.count_documents(
         {"method": "GET", "path": "/status"})
     for method in methods:
