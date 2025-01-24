@@ -1,57 +1,59 @@
 const http = require('http');
-const fs = require('fs');
+const fs = require('fs').promises;
 
-const PORT = 1245;
-const HOST = 'localhost';
-const app = http.createServer();
-const DB_FILE = process.argv.length > 2 ? process.argv[2] : '';
+async function countStudents(path) {
+    try {
+        const data = await fs.readFile(path, 'utf8');
+        const lines = data.split('\n').filter((line) => line.trim() !== '');
 
-const countStudents = (dataPath) => new Promise((resolve, reject) => {
-    fs.readFile(dataPath, 'utf8', (err, data) => {
-        if (err) {
-            reject(Error('Cannot load the database'));
-            return;
+        if (lines.length <= 1) {
+            return 'No students found';
         }
 
-        const lines = data.trim().split('\n').slice(1);
-        const students = lines.map((line) => line.split(',')).filter((fields) => fields.length > 0);
-
+        const students = lines.slice(1);
         const fields = {};
-        students.forEach((student) => {
-            const field = student[student.length - 1];
+
+        students.forEach((line) => {
+            const [firstname, , , field] = line.split(',');
             if (!fields[field]) {
                 fields[field] = [];
             }
-            fields[field].push(student[0]);
+            fields[field].push(firstname);
         });
 
-        resolve({ count: students.length, fields });
-    });
-});
-
-app.on('request', async (req, res) => {
-    if (req.method === 'GET' && req.url === '/') {
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello Holberton School!');
-    } else if (req.method === 'GET' && req.url === '/students') {
-        res.setHeader('Content-Type', 'text/plain');
-        res.write('This is the list of our students\n');
-        try {
-            const { count, fields } = await countStudents(DB_FILE);
-            res.write(`Number of students: ${count}\n`);
-            Object.entries(fields).forEach(([field, students]) => {
-                res.write(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`);
-            });
-        } catch (err) {
-            res.write(err.message);
+        let response = `Number of students: ${students.length}\n`;
+        for (const [field, names] of Object.entries(fields)) {
+            response += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}\n`;
         }
-        res.end();
+        return response.trim();
+    } catch (error) {
+        throw new Error('Cannot load the database');
+    }
+}
+
+const app = http.createServer(async (req, res) => {
+    const url = req.url;
+
+    if (url === '/') {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Hello Holberton School!');
+    } else if (url === '/students') {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write('This is the list of our students\n');
+
+        try {
+            const databasePath = process.argv[2];
+            const studentData = await countStudents(databasePath);
+            res.end(studentData);
+        } catch (error) {
+            res.end(error.message);
+        }
     } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Invalid request');
+        res.end('Not Found');
     }
 });
 
-app.listen(PORT, HOST, () => {
-    console.log(`Server running at http://${HOST}:${PORT}/`);
-});
+app.listen(1245);
+
+module.exports = app;
