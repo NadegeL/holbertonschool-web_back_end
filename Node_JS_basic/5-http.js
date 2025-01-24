@@ -40,18 +40,18 @@ app.on('request', async (req, res) => {
             const { count, fields } = await countStudents(DB_FILE);
             res.write(`Number of students: ${count}\n`);
             Object.entries(fields).forEach(([field, students]) => {
-                res.write(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\
-                }\n`);
-            }
-            );
-        }
-        catch (err) {
+                res.write(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`);
+            });
+        } catch (err) {
             res.write(err.message);
         }
         res.end();
+    } else {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Invalid request');
     }
-    app.listen(PORT, HOST, () => {
-        console.log(`Server running at http://${HOST}:${PORT}/`);
-    });
-}
-);
+});
+
+app.listen(PORT, HOST, () => {
+    console.log(`Server running at http://${HOST}:${PORT}/`);
+});
